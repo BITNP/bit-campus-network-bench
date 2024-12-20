@@ -1,0 +1,39 @@
+image: docker:git
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  RELEASE_TAG: $CI_REGISTRY_IMAGE:latest
+
+stages:
+  - gen-pip-file
+  - build
+
+gen-pip-file:
+  image: python:3.9
+  stage: gen-pip-file
+  cache:
+    key:
+      files:
+        - poetry.lock
+    paths:
+      - .cache/pip
+      - .venv
+  artifacts:
+    paths:
+      - requirements.txt
+  script:
+    - pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+    - pip3 install poetry
+    - poetry config virtualenvs.in-project true
+    - poetry install
+    - poetry export --without-hashes -f requirements.txt > requirements.txt
+
+build:
+  before_script:
+    - docker info
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  stage: build
+  script:
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
