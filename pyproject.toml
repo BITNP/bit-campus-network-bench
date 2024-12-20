@@ -10,7 +10,7 @@ python = ">=3.9"
 selenium = "^3.141.0"
 bs4 = "^0.0.1"
 requests = "^2.25.0"
-tqdm = "^4.54.1"
+tqdm = "^4.66.3"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.6.0"
