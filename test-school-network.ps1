@@ -71,8 +71,8 @@ if ($global:isRunningOnWindows) {
     $adapterIP4 = (Get-NetIPAddress -InterfaceAlias $adapterName4 | Where-Object {$_.AddressFamily -eq 'IPv4'}).IPAddress
 } else {
     $defaultRoute4 = (ip route | grep default)
-    $defaultGateway4 = (echo $route | awk '{print $3}')
-    $adapterName4 = (echo $route | awk '{print $5}')
+    $defaultGateway4 = (echo $defaultRoute4 | awk '{print $3}')
+    $adapterName4 = (echo $defaultRoute4 | awk '{print $5}')
     $adapterIP4 = (ip -4 addr show $adapterName4 | grep inet | head -n 1 | awk '{print $2}' | cut -d/ -f1)
 }
 
@@ -115,8 +115,8 @@ if ($global:isRunningOnWindows) {
     $adapterIP6 = ((Get-NetIPAddress -InterfaceAlias $adapterName6 | Where-Object {$_.AddressFamily -eq 'IPv6' -and $_.PrefixOrigin -ne 'WellKnown'}).IPAddress)[0]
 } else {
     $defaultRoute6 = (ip -6 route | grep default)
-    $defaultGateway6 = (echo $route | awk '{print $3}')
-    $adapterName6 = (echo $route | awk '{print $5}')
+    $defaultGateway6 = (echo $defaultRoute6 | awk '{print $3}')
+    $adapterName6 = (echo $defaultRoute6 | awk '{print $5}')
     $adapterIP6 = (ip -6 addr show $adapterName6 | grep inet6 | head -n 1 | awk '{print $2}' | cut -d/ -f1)
 }
 
