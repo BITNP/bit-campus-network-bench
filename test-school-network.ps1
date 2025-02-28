@@ -51,6 +51,15 @@ if (-not $pingResult) {
 
 Write-Host "本机的校园网接入正确"
 
+Write-Host "检查校园网DNS解析"
+$null = Resolve-DnsName -Name "www.baidu.com" -Server "10.0.0.9" -DnsOnly
+$null = Resolve-DnsName -Name "www.baidu.com" -Server "10.0.0.10" -DnsOnly
+$null = Resolve-DnsName -Name "www.baidu.com" -Server "10.0.0.11" -DnsOnly
+$null = Resolve-DnsName -Name "www.baidu.com" -Server "10.0.0.12" -DnsOnly
+$null = Resolve-DnsName -Name "www.baidu.com" -Server "10.0.0.13" -DnsOnly
+$null = Resolve-DnsName -Name "www.baidu.com" -Server "10.0.0.14" -DnsOnly
+Write-Host "检查校园网DNS解析完毕，若没有输出报错则说明正常"
+
 # 检查一下ipv6情况 2001:da8:204:1205::22 is mirror.bit.edu.cn
 $pingResult = Test-Connection -ComputerName "2001:da8:204:1205::22" -Count 1 -Quiet
 if (-not $pingResult) {
