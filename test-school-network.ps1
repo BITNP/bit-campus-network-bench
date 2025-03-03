@@ -96,7 +96,7 @@ $IPv4OutIP = (Invoke-WebRequest -Uri "http://4.ipw.cn").Content
 
 Write-Host "IPv4 网络出口是 $IPv4OutIP"
 
-Write-Host "测试常见网站"
+Write-Host "测试常见网站延迟"
 
 $commonWebsites4News = "www.qq.com","www.163.com"
 $commonWebsites4Video = "www.bilibili.com","www.iqiyi.com","www.douyin.com","www.douyu.com","www.huya.com"
@@ -108,6 +108,17 @@ foreach ($website in $commonWebsites4) {
     Test-Connection -IPv4 -ComputerName $website
 }
 
+$userInput = Read-Host "是否测试内网速度？(y/n)"
+if ($userInput -eq 'y') {
+    Write-Host "请在打开的浏览器中操作。"
+    Start-Process "http://speed.bitnp.net"
+}
+
+$userInput = Read-Host "是否测试IPv4公网速度？(y/n)"
+if ($userInput -eq 'y') {
+    Write-Host "请在打开的浏览器中操作。"
+    Start-Process "http://test.ustc.edu.cn"
+}
 
 #IPV6
 if (-not $global:isIPv6Available) {
@@ -144,7 +155,7 @@ $DualStackOutIP = (Invoke-WebRequest -Uri "http://test.ipw.cn").Content
 
 Write-Host "双栈 网络出口是 $DualStackOutIP"
 
-Write-Host "测试常见网站"
+Write-Host "测试常见网站延迟"
 
 $commonWebsites6News = "www.qq.com","www.163.com"
 $commonWebsites6Video = "www.iqiyi.com","www.douyin.com","www.douyu.com","www.huya.com"
@@ -155,3 +166,10 @@ foreach ($website in $commonWebsites6) {
     Test-Connection -IPv6 -ComputerName $website
 }
 
+$userInput = Read-Host "是否测试IPv6公网速度？(y/n)"
+if ($userInput -eq 'y') {
+    Write-Host "请在打开的浏览器中操作。"
+    Start-Process "http://test6.ustc.edu.cn"
+}
+
+Write-Host "测试结束"
