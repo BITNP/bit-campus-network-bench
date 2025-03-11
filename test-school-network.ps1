@@ -49,6 +49,10 @@ if (-not $pingResult) {
     throw "内网不可用，请登录校园网"
 }
 
+if (-not (Resolve-DnsName -Name "www.bit.edu.cn").IPAddress.StartsWith("10.0.")) {
+    throw "默认DNS不是校园网DNS，请重新配置网络"
+}
+
 Write-Host "本机的校园网接入正确"
 
 Write-Host "检查校园网DNS解析"
