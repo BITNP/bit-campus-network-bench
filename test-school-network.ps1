@@ -1,4 +1,5 @@
 #!/usr/bin/env pwsh
+# everything411@ BITNP 2025, MIT License
 
 function Test-IpInSubnet {
     param (
