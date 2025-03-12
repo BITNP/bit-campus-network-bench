@@ -65,8 +65,8 @@ $null = Resolve-DnsName -Name "www.baidu.com" -Server "10.0.0.13" -DnsOnly
 $null = Resolve-DnsName -Name "www.baidu.com" -Server "10.0.0.14" -DnsOnly
 Write-Host "检查校园网DNS解析完毕，若没有输出报错则说明正常"
 
-# 检查一下ipv6情况 2001:da8:204:1205::22 is mirror.bit.edu.cn
-$pingResult = Test-Connection -ComputerName "2001:da8:204:1205::22" -Count 1 -Quiet
+# 检查一下ipv6情况 2001:da8:204:c003::1 是校园网内部某个v6路由地址
+$pingResult = Test-Connection -ComputerName "2001:da8:204:c003::1" -Count 1 -Quiet
 if (-not $pingResult) {
     $global:isIPv6Available = $false
     Write-Warning "IPv6不可用，因此不进行IPv6测试"
